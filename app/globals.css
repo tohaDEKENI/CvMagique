@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin "daisyui" {
+  themes: all;
+}
+
+.scrollable-no-scrollbar {
+  overflow: auto;
+  -ms-overflow-style: Edge;  /* IE et Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.scrollable-no-scrollbar::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari et Opera */
+}
