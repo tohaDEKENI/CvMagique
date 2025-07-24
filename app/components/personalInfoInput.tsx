@@ -5,6 +5,8 @@ import { Plus } from 'lucide-react'
 interface CvLeftProps {
     information: personnalInfo // On utilise ici notre interface pour typer les props
     setInformation: Dispatch<SetStateAction<personnalInfo>>
+    imageSrc:string,
+    setImageSrc:Dispatch<SetStateAction<string>>
 }
 
 type Langue = {
@@ -12,9 +14,18 @@ type Langue = {
     langue: string
 }
 
-const PersonalInfoInput = ({ information, setInformation }: CvLeftProps) => {
+const PersonalInfoInput = ({ information, setInformation,imageSrc ,setImageSrc}: CvLeftProps) => {
     const [sites, setSites] = useState<string[]>(['https://exemple.com'])
     const [langue, setLangue] = useState<Langue[]>([{ langue: 'Francais', niveau: 'Langue maternelle' }])
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0]
+        if (file) {
+            // Crée un URL local temporaire pour l'image
+            const imageUrl = URL.createObjectURL(file)
+            setImageSrc(imageUrl)
+        }
+    }
 
     return (
         <div>
@@ -37,7 +48,7 @@ const PersonalInfoInput = ({ information, setInformation }: CvLeftProps) => {
 
                 <fieldset className="fieldset">
                     <legend className="fieldset-legend">Choisissez une image</legend>
-                    <input type="file" className="file-input w-full" />
+                    <input type="file" className="file-input w-full" onChange={handleFileChange}/>
                     <label className="label">Max size 2MB</label>
                 </fieldset>
 
@@ -53,7 +64,7 @@ const PersonalInfoInput = ({ information, setInformation }: CvLeftProps) => {
                         <legend className="fieldset-legend">Quel est votre prénom ?</legend>
                         <textarea className="textarea w-full h-44" placeholder="Ex: Ingénieur logiciel avec 5 ans d'expérience en développement web"
                             value={information.objectif} onChange={(e) => setInformation({ ...information, objectif: e.target.value })}
-                            maxLength={366 }
+                            maxLength={366}
                         ></textarea>
                     </fieldset>
                 </div>
@@ -103,10 +114,11 @@ const PersonalInfoInput = ({ information, setInformation }: CvLeftProps) => {
 
                 {
                     sites.length !== 1 &&
-                    <button className='btn btn-outline btn-primary' onClick={() => { setSites(sites.slice(0, -1)) ;
-                            const updateInformatiom = information.site.slice(0,-1);
-                            setInformation({...information,site:updateInformatiom})
-                        }}
+                    <button className='btn btn-outline btn-primary' onClick={() => {
+                        setSites(sites.slice(0, -1));
+                        const updateInformatiom = information.site.slice(0, -1);
+                        setInformation({ ...information, site: updateInformatiom })
+                    }}
                     >
                         Enlever
                     </button>

@@ -21,6 +21,9 @@ const Page = () => {
     setZoom(value / 100)
   }
 
+  const [imageSrc, setImageSrc] = useState('https://tse3.mm.bing.net/th/id/OIP.P-UW9o6SG03KVhnCKc_17wHaHO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3')
+
+ 
   const [information, setInformation] = useState<personnalInfo>({
     proffession: "Developpeur",
     address: "Casablanca",
@@ -50,7 +53,7 @@ const Page = () => {
     description: "Études en programmation, algorithmique, structures de données, projets web et mobile."
   }])
 
-  const [centreInteret,setCentreInteret] = useState<string[]>(['Lecture'])
+  const [centreInteret, setCentreInteret] = useState<string[]>(['Lecture'])
 
   const themes = [
     "light", "dark", "cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro",
@@ -108,8 +111,8 @@ const Page = () => {
             <h1 className='text-3xl italic font-bold'><span className='text-white'>CV</span>Magique</h1>
             <button className='btn btn-primary rounded-md'><Eye className='text-white' />Previsualiser</button>
           </div>
-          <PersonalInfoInput information={information} setInformation={setInformation} />
-          <ProffessionnalObjective proffessionnelInfo={proffessionnelInfo} setProffessionnelInfo={setProffessionnelInfo} Education={Education} setEducation={setEducation} centreInteret = {centreInteret} setCentreInteret={setCentreInteret}/>
+          <PersonalInfoInput information={information} setInformation={setInformation} imageSrc={imageSrc} setImageSrc={setImageSrc}/>
+          <ProffessionnalObjective proffessionnelInfo={proffessionnelInfo} setProffessionnelInfo={setProffessionnelInfo} Education={Education} setEducation={setEducation} centreInteret={centreInteret} setCentreInteret={setCentreInteret} />
         </div>
 
 
@@ -139,8 +142,8 @@ const Page = () => {
               transformOrigin: 'top center'
             }} className='w-[794px] h-[1123px] mx-auto bg-white flex items-center transition-transform duration-300' data-theme={theme}
           >
-            <CvLeft information={information} />
-            <CvRight information={information} proffessionnelInfo={proffessionnelInfo} Education={Education} centreInteret={centreInteret}/>
+            <CvLeft information={information} imageSrc={imageSrc}/>
+            <CvRight information={information} proffessionnelInfo={proffessionnelInfo} Education={Education} centreInteret={centreInteret} />
           </div>
           <button onClick={handleDownload} className='btn btn-primary fixed top-25'>Telecharger</button>
         </div>
@@ -157,7 +160,7 @@ const Page = () => {
               <p className="text-sm text-base-content">
                 Merci de vous connecter depuis un appareil avec un écran plus grand.
               </p>
-              <img src="/sorry.gif" alt="" className='mx-auto'/>
+              <img src="/sorry.gif" alt="" className='mx-auto' />
               <button className="btn btn-outline btn-error mt-4" disabled>
                 Mode mobile désactivé
               </button>

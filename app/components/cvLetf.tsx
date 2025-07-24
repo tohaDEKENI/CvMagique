@@ -6,15 +6,16 @@ import { useState } from 'react'
 
 interface CvLeftProps {
     information: personnalInfo // On utilise ici notre interface pour typer les props
+    imageSrc:string
 }
 
 
-const CvLeft = ({ information }: CvLeftProps) => {
+const CvLeft = ({ information ,imageSrc}: CvLeftProps) => {
 
 
     return (
         <div className="h-full w-1/3 bg-base-300  p-4 items-center space-y-4">
-            <img src="https://tse3.mm.bing.net/th/id/OIP.P-UW9o6SG03KVhnCKc_17wHaHO?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+            <img src={imageSrc}
                 alt="Photo de profil"
                 className="border-8 border-primary rounded-full w-full h-3/12 object-cover "
             />
