@@ -53,7 +53,7 @@ const PersonalInfoInput = ({ information, setInformation }: CvLeftProps) => {
                         <legend className="fieldset-legend">Quel est votre prénom ?</legend>
                         <textarea className="textarea w-full h-44" placeholder="Ex: Ingénieur logiciel avec 5 ans d'expérience en développement web"
                             value={information.objectif} onChange={(e) => setInformation({ ...information, objectif: e.target.value })}
-                            maxLength={600}
+                            maxLength={366 }
                         ></textarea>
                     </fieldset>
                 </div>

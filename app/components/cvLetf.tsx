@@ -19,20 +19,20 @@ const CvLeft = ({ information }: CvLeftProps) => {
                 className="border-8 border-primary rounded-full w-full h-3/12 object-cover "
             />
             <div className="space-y-4">
-                <h1 className="text-2xl text-center border-t border-b w-6/12 mx-auto text-primary">PROFILE</h1>
+                <h1 className="text-2xl font-bold text-center border-t border-b border-gray-300 w-6/12 mx-auto py-2">PROFILE</h1>
                 <h1 className='text-primary'>{information.proffession}</h1>
                 <p className="textarea-xs ">{information.objectif}</p>
             </div>
 
             <div className="space-y-4">
-                <h1 className="text-2xl text-center border-t border-b w-6/12 mx-auto text-primary">CONTACTS</h1>
+                <h1 className="text-2xl font-bold text-center border-t border-b border-gray-300 w-6/12 mx-auto py-2">CONTACTS</h1>
                 <p className='inline-flex'><Phone className='text-secondary' />{information.contact}</p> <br />
                 <p className='inline-flex'><Mail className='text-secondary' />{information.email}</p> <br />
                 <p className='inline-flex'><MapPinHouse className='text-secondary' />{information.address}</p>
             </div>
 
             <div className="space-y-4" >
-                <h1 className="text-xl text-center border-t border-b w-10/12 mx-auto text-primary">LIENS SOCIAUX</h1>
+                <h1 className="text-lg font-bold text-center border-t border-b border-gray-300 w-10/12 mx-auto py-2">LIENS SOCIAUX</h1>
                 <div className='flex  flex-col space-y-2'>
                     {
                         information.site.map((si, i) => (

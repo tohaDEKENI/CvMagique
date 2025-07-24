@@ -8,10 +8,12 @@ interface ProffessionnalInfoProps {
     proffessionnelInfo: parcoursExp[],
     setProffessionnelInfo: Dispatch<SetStateAction<parcoursExp[]>>
     Education: education[],
-    setEducation: Dispatch<SetStateAction<education[]>>
+    setEducation: Dispatch<SetStateAction<education[]>>,
+    centreInteret: string[],
+    setCentreInteret: Dispatch<SetStateAction<string[]>>
 }
 
-const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Education, setEducation }: ProffessionnalInfoProps) => {
+const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Education, setEducation, centreInteret, setCentreInteret }: ProffessionnalInfoProps) => {
 
     const handleChangeRole = (i: number, newRole: string) => {
         const updated = [...proffessionnelInfo]
@@ -23,10 +25,10 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
         <div className='w-full'>
             <h1 className='text-2xl'>Experience</h1>
             {proffessionnelInfo.map((exp, i) => (
-                <div>
+                <div  key={i}>
                     <h1>Experience {i + 1}</h1>
                     <div className='grid grid-cols-2 gap-4 w-full'>
-                        <fieldset className="fieldset" key={i}>
+                        <fieldset className="fieldset" >
                             <legend className="fieldset-legend">Titre</legend>
                             <input
                                 type="text"
@@ -40,7 +42,7 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                                 }}
                             />
                         </fieldset>
-                        <fieldset className="fieldset" key={i}>
+                        <fieldset className="fieldset">
                             <legend className="fieldset-legend">role</legend>
                             <input
                                 type="text"
@@ -54,7 +56,7 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                                 }}
                             />
                         </fieldset>
-                        <fieldset className="fieldset" key={i}>
+                        <fieldset className="fieldset" >
                             <legend className="fieldset-legend">annee</legend>
                             <input
                                 type="text"
@@ -68,7 +70,7 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                                 }}
                             />
                         </fieldset>
-                        <fieldset className="fieldset" key={i}>
+                        <fieldset className="fieldset" >
                             <legend className="fieldset-legend">Description</legend>
                             <input
                                 type="text"
@@ -101,10 +103,10 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
             <h1 className='text-2xl'>Education</h1>
             {
                 Education.map((edu, i) => (
-                    <div>
-                        <h1>Education {i+1}</h1>
+                    <div key={i}>
+                        <h1>Education {i + 1}</h1>
                         <div className='grid grid-cols-2 gap-4 w-full'>
-                            <fieldset className="fieldset" key={i}>
+                            <fieldset className="fieldset" >
                                 <legend className="fieldset-legend">diplome</legend>
                                 <input
                                     type="text"
@@ -118,7 +120,7 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                                     }}
                                 />
                             </fieldset>
-                            <fieldset className="fieldset" key={i}>
+                            <fieldset className="fieldset" >
                                 <legend className="fieldset-legend">etablissement</legend>
                                 <input
                                     type="text"
@@ -132,7 +134,7 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                                     }}
                                 />
                             </fieldset>
-                            <fieldset className="fieldset" key={i}>
+                            <fieldset className="fieldset" >
                                 <legend className="fieldset-legend">Lieu</legend>
                                 <input
                                     type="text"
@@ -146,7 +148,7 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                                     }}
                                 />
                             </fieldset>
-                            <fieldset className="fieldset" key={i}>
+                            <fieldset className="fieldset" >
                                 <legend className="fieldset-legend">Date</legend>
                                 <input
                                     type="text"
@@ -160,7 +162,7 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                                     }}
                                 />
                             </fieldset>
-                            <fieldset className="fieldset" key={i}>
+                            <fieldset className="fieldset">
                                 <legend className="fieldset-legend">mention</legend>
                                 <input
                                     type="text"
@@ -174,7 +176,7 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                                     }}
                                 />
                             </fieldset>
-                            <fieldset className="fieldset" key={i}>
+                            <fieldset className="fieldset" >
                                 <legend className="fieldset-legend">description</legend>
                                 <input
                                     type="text"
@@ -198,7 +200,7 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                 proffessionnelInfo.length < 3 &&
                 <button className='btn btn-outline btn-primary'
                     onClick={() => {
-                        setEducation([...Education, {diplome: "",etablissement: "",Lieu: "",Date: "",mention: "",description: ""}])
+                        setEducation([...Education, { diplome: "", etablissement: "", Lieu: "", Date: "", mention: "", description: "" }])
                     }}
                 >
                     <Plus /> Ajouter une education
@@ -212,6 +214,41 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                 </button>
             }
 
+            <h1 className='text-2xl'>Centre d'interet</h1>
+            <div className='space-y-2'>
+                {
+                    centreInteret.map((centre, i) => (
+                        <div>
+                            <input type="text" className='input w-full' placeholder="centre d'interer"
+                                value={centre}
+                                onChange={(e) => {
+                                    const update = [...centreInteret]
+                                    update[i] = e.target.value
+                                    setCentreInteret(update)
+                                }}
+                            />
+                        </div>
+                    ))
+                }
+            </div>
+
+            {
+                centreInteret.length < 4 &&
+                <button className='btn btn-outline btn-primary'
+                    onClick={() => {
+                        setCentreInteret([...centreInteret, ""])
+                    }}
+                >
+                    <Plus /> Ajouter une centre d'interet
+                </button>
+            }
+
+            {
+                centreInteret.length > 1 &&
+                <button className='btn btn-outline btn-primary' onClick={() => setCentreInteret([...centreInteret.slice(0, -1)])}>
+                    Enlever
+                </button>
+            }
         </div>
     )
 }
