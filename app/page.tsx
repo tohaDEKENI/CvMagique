@@ -6,7 +6,7 @@ import PersonalInfoInput from './components/personalInfoInput';
 import ProffessionnalObjective from './components/proffesionnalObjective';
 import CvLeft from './components/cvLetf';
 import CvRight from './components/cvRight';
-import { personnalInfo } from './types/information'
+import { personnalInfo, parcoursExp, education } from './types/information'
 import { useRef, useState } from 'react';
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas-pro';
@@ -14,16 +14,41 @@ import html2canvas from 'html2canvas-pro';
 const Page = () => {
   const divRef = useRef<HTMLDivElement>(null)
   const [theme, setTheme] = useState("light")
+  const [zoom, setZoom] = useState(1)
+
+  const handleZoom = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value)
+    setZoom(value / 100)
+  }
+
   const [information, setInformation] = useState<personnalInfo>({
     proffession: "Developpeur",
     address: "Casablanca",
     email: "expemple@gmail.com",
     contact: "+33 6 12 34 56 78",
-    site: "http://exemple.com",
+    site: ["http://exemple.com"],
     objectif: "Passionné par les nouvelles technologies, je possède une solide expérience en gestion de projet et en développement web. Autonome, rigoureux et curieux, j'aime relever des défis et travailler en équipe pour concevoir des solutions innovantes et efficaces. Mon objectif est de continuer à apprendre et à contribuer à des projets qui ont du sens.",
     nom: "DEKENI",
-    prenom: "Toha"
+    prenom: "Toha",
+    langue: [{ langue: "Francais", niveau: "Courant" }]
   })
+
+  const [proffessionnelInfo, setProffessionnelInfo] = useState<parcoursExp[]>([{
+    titre: 'DEVELLOPPEUR WEB',
+    poste: 'INTERFACE',
+    annees: '2012',
+    role: ' Mon objectif est de continuer à apprendre et à contribuer à des projets qui'
+  }])
+
+
+  const [Education, setEducation] = useState<education[]>([{
+    diplome: "Licence Informatique",
+    etablissement: "Université Hassan II",
+    Lieu: "Casablanca, Maroc",
+    Date: "2020-09",
+    mention: "Très bien",
+    description: "Études en programmation, algorithmique, structures de données, projets web et mobile."
+  }])
 
   const themes = [
     "light", "dark", "cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro",
@@ -38,7 +63,7 @@ const Page = () => {
       try {
 
         const canvas = await html2canvas(element, {
-          scale: 1,
+          scale: 3,
           useCORS: true
         })
 
@@ -55,9 +80,9 @@ const Page = () => {
 
         pdf.addImage(imgData, "PNG", 0, 0, width, height);
 
-        pdf.save();
+        pdf.save("mon_CV.pdf");
       } catch (error) {
-
+        alert("Impossible")
       }
     }
   }
@@ -82,7 +107,7 @@ const Page = () => {
             <button className='btn btn-primary rounded-md'><Eye className='text-white' />Previsualiser</button>
           </div>
           <PersonalInfoInput information={information} setInformation={setInformation} />
-          <ProffessionnalObjective />
+        <ProffessionnalObjective proffessionnelInfo={proffessionnelInfo} setProffessionnelInfo={setProffessionnelInfo} Education={Education} setEducation={setEducation} />
         </div>
 
 
@@ -97,18 +122,48 @@ const Page = () => {
             ))}
           </select>
 
-          <input type="range" min={0} max="100" value="40" className="range fixed  w-40 bg-secondary" />
-          <div ref={divRef} className='w-[794px] h-[1123px]  mx-auto bg-white flex items-center' data-theme={theme}>
+          <input
+            type="range"
+            min={20}
+            max={100}
+            value={zoom * 100}
+            onChange={handleZoom}
+            className="range fixed top-5  w-40 bg-secondary z-50"
+          />
+
+          <div
+            ref={divRef} style={{
+              transform: `scale(${zoom})`,
+              transformOrigin: 'top center'
+            }} className='w-[794px] h-[1123px] mx-auto bg-white flex items-center transition-transform duration-300' data-theme={theme}
+          >
             <CvLeft information={information} />
-            <CvRight information={information} />
+            <CvRight information={information} proffessionnelInfo={proffessionnelInfo} Education={Education}/>
           </div>
           <button onClick={handleDownload} className='btn btn-primary fixed top-25'>Telecharger</button>
         </div>
       </div>
 
       <div className="flex h-screen lg:hidden items-center justify-center">
-        <h1>Desiler</h1>
+        <div className="hero bg-base-200 min-h-screen">
+          <div className="hero-content text-center">
+            <div className="max-w-md">
+              <h1 className="text-4xl font-bold text-error">Accès non disponible</h1>
+              <p className="py-6 text-lg text-base-content">
+                Pour garantir une expérience optimale, cette application est uniquement accessible sur un écran de taille large (ordinateur de bureau ou portable).
+              </p>
+              <p className="text-sm text-base-content">
+                Merci de vous connecter depuis un appareil avec un écran plus grand.
+              </p>
+              <img src="/sorry.gif" alt="" />
+              <button className="btn btn-outline btn-error mt-4" disabled>
+                Mode mobile désactivé
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
   );
 }
