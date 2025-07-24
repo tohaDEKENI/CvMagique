@@ -214,11 +214,11 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                 </button>
             }
 
-            <h1 className='text-2xl'>Centre d'interet</h1>
+            <h1 className='text-2xl'>Centre d&apos;interet</h1>
             <div className='space-y-2'>
                 {
                     centreInteret.map((centre, i) => (
-                        <div>
+                        <div key={i}>
                             <input type="text" className='input w-full' placeholder="centre d'interer"
                                 value={centre}
                                 onChange={(e) => {
@@ -239,7 +239,7 @@ const ProffessionnalObjective = ({ proffessionnelInfo, setProffessionnelInfo, Ed
                         setCentreInteret([...centreInteret, ""])
                     }}
                 >
-                    <Plus /> Ajouter une centre d'interet
+                    <Plus /> Ajouter une centre d&apos;interet
                 </button>
             }
 
